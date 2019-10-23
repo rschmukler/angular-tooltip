@@ -25,7 +25,7 @@
         options = extend({ templateUrl: defaultTemplateUrl }, options);
         options.tether = extend({}, defaultTetherOptions, options.tether || {});
 
-        var template = options.template || ( $templateCache.get(options.templateUrl) ? $templateCache.get(options.templateUrl)[1] : undefined ),
+        var template = options.template || ( $templateCache.get(options.templateUrl) ? $templateCache.get(options.templateUrl) : undefined ),
             scope    = options.scope || $rootScope.$new(),
             target   = options.target,
             tether, elem;
@@ -42,7 +42,7 @@
         function attachTether() {
           tether = new Tether(extend({
             element: elem,
-            target: target
+            target: target[0]
           }, options.tether));
         }
 
@@ -79,7 +79,7 @@
         function close() {
           delete result.elem;
           if (elem !== undefined && elem != null)
-            $animate.leave(elem);
+            $animate.leave(angular.element(elem));
           detachTether();
         }
 
@@ -120,10 +120,11 @@
             /**
              * Toggle the tooltip.
              */
-            elem.hover(function() {
-              scope.$apply(tooltip.open);
-            }, function() {
-              scope.$apply(tooltip.close);
+            elem.on('mouseover', function() {
+              scope.$apply(tooltip.open());
+            });
+            elem.on('mouseout', function() {
+              scope.$apply(tooltip.close());
             });
           }
         };
