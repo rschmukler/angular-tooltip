@@ -78,7 +78,8 @@
          */
         function close() {
           delete result.elem;
-          $animate.leave(elem);
+          if (elem !== undefined && elem != null)
+            $animate.leave(elem);
           detachTether();
         }
 
