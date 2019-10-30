@@ -1,6 +1,6 @@
 {
   "name": "angular-tooltip",
-  "version": "1.0.5",
+  "version": "1.2.1",
   "description": "Simple and extensible tooltips for angularjs",
   "devDependencies": {
     "grunt": "~0.4.1",
