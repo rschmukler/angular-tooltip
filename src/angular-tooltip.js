@@ -74,8 +74,12 @@
           }
           result.elem = elem;
           $animate.enter(elem, null, target);
-          attachTether();
-          tether.position();
+          // without a timeout, an ng-repeat won't have finished, thus the height won't be calculated for attachment, and only top based alignment will work
+          // bottom base or variable width, right based alignment will be flakey.
+          $timeout(function(){
+            attachTether();
+            tether.position();
+          }, 0);
         }
 
         /**
