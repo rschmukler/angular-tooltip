@@ -1,5 +1,5 @@
 {
-  "name": "angular-tooltip",
+  "name": "@chinchilla-software/angular-tooltip",
   "version": "1.2.1",
   "description": "Simple and extensible tooltips for angularjs",
   "repository": "https://github.com/Chinchilla-Software-Com/angular-tooltip",
