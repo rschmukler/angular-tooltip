@@ -1,30 +1,9 @@
 {
-  "name": "@chinchilla-software/angular-tooltip",
-  "version": "1.2.1",
-  "description": "Simple and extensible tooltips for angularjs",
-  "repository": "https://github.com/Chinchilla-Software-Com/angular-tooltip",
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-ngmin": "~0.0.3",
-    "load-grunt-tasks": "~0.2.0",
-    "karma": "latest",
-    "karma-mocha": "latest",
-    "karma-phantomjs-launcher": "~0.1.0",
-    "chai": "latest",
-    "sinon": "latest",
-    "sinon-chai": "latest",
-    "chai-jquery": "~1.2.1"
-  },
-  "engines": {
-    "node": ">=0.8.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "dependencies": {
-    "grunt-karma": "^0.10.1"
+	"name": "@chinchilla-software/angular-tooltip",
+	"version": "1.2.2",
+	"description": "Simple and extensible tooltips for angularjs",
+	"repository": "https://github.com/Chinchilla-Software-Com/angular-tooltip",
+	"dependencies": {
+		"angular": "1.8.2"
   }
 }
