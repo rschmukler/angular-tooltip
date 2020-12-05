@@ -25,7 +25,7 @@
         options = extend({ templateUrl: defaultTemplateUrl }, options);
         options.tether = extend({}, defaultTetherOptions, options.tether || {});
 
-        var template = options.template || ( $templateCache.get(options.templateUrl) ? $templateCache.get(options.templateUrl)[1] : undefined ),
+        var template = options.template || ( $templateCache.get(options.templateUrl) ? $templateCache.get(options.templateUrl) : undefined ),
             scope    = options.scope || $rootScope.$new(),
             target   = options.target,
             tether, elem;
@@ -42,7 +42,7 @@
         function attachTether() {
           tether = new Tether(extend({
             element: elem,
-            target: target
+            target: target[0]
           }, options.tether));
         }
 
@@ -53,8 +53,13 @@
           if (tether) {
             tether.destroy();
             tether = undefined;
-            angular.element(elem).scope().$destroy();
-            angular.element(elem).remove();
+            var ae = angular.element(elem);
+            if (ae !== undefined){
+              var aes = ae.scope();
+              if (aes !== undefined)
+                aes.$destroy();
+              ae.remove();
+            }
           }
         }
 
@@ -69,8 +74,12 @@
           }
           result.elem = elem;
           $animate.enter(elem, null, target);
-          attachTether();
-          tether.position();
+          // without a timeout, an ng-repeat won't have finished, thus the height won't be calculated for attachment, and only top based alignment will work
+          // bottom base or variable width, right based alignment will be flakey.
+          $timeout(function(){
+            attachTether();
+            tether.position();
+          }, 0);
         }
 
         /**
@@ -78,7 +87,8 @@
          */
         function close() {
           delete result.elem;
-          $animate.leave(elem);
+          if (elem !== undefined && elem != null)
+            $animate.leave(angular.element(elem));
           detachTether();
         }
 
@@ -119,10 +129,11 @@
             /**
              * Toggle the tooltip.
              */
-            elem.hover(function() {
-              scope.$apply(tooltip.open);
-            }, function() {
-              scope.$apply(tooltip.close);
+            elem.on('mouseover', function() {
+              scope.$apply(tooltip.open());
+            });
+            elem.on('mouseout', function() {
+              scope.$apply(tooltip.close());
             });
           }
         };
